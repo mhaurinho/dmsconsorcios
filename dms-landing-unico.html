@@ -1136,7 +1136,7 @@
             </div>
 
             <div class="sim-result">
-              <p class="sim-result-label">PARCELA REFERÊNCIA (ILUSTRATIVA)</p>
+              <p class="sim-result-label" id="sim-result-label">PARCELA REFERÊNCIA (ILUSTRATIVA)</p>
               <p class="sim-result-val" id="sim-parcela-promo">R$ 0,00</p>
               <p class="sim-result-note" id="sim-parcela-full">100%: R$ 0,00 s/ desconto referência</p>
             </div>
@@ -1476,11 +1476,14 @@
         var waBase = "https://wa.me/5513991006315?text=";
         var caminhaoCredits = [200000, 210000, 220000, 230000, 250000, 270000, 300000, 320000, 350000, 380000];
         var caminhaoParcelas = [1977.05, 2075.9, 2174.75, 2273.61, 2471.31, 2669.01, 2965.57, 3163.28, 3459.83, 3756.39];
+        /* Carta p/ imóvel (print): crédito × meia parcela */
+        var imovelCredits = [110000, 150000, 300000, 400000, 500000];
+        var imovelMeiaParcelas = [280, 382, 767, 1014, 1268];
         var fullOverPromo = 0.0215624 / 0.014375;
         var segments = {
           carro: { min: 15000, max: 80000, step: 500, def: 50000, promo: 0.014375, full: 0.0215624, label: "Carro" },
           moto: { min: 15000, max: 80000, step: 500, def: 30000, promo: 0.014375, full: 0.0215624, label: "Moto" },
-          imoveis: { min: 100000, max: 500000, step: 5000, def: 200000, promo: 0.0102, full: 0.0153, label: "Imóvel" },
+          imoveis: { min: 110000, max: 500000, step: 5000, def: 300000, label: "Imóvel", imovelTable: true },
           agro: { min: 80000, max: 400000, step: 5000, def: 150000, promo: 0.0116, full: 0.0174, label: "Máquinas agrícolas" },
           caminhao: { min: 200000, max: 380000, step: 1000, def: 300000, label: "Caminhão", table: true },
         };
@@ -1492,6 +1495,7 @@
         var maxL = document.getElementById("sim-max-label");
         var promoEl = document.getElementById("sim-parcela-promo");
         var fullEl = document.getElementById("sim-parcela-full");
+        var resultLabel = document.getElementById("sim-result-label");
         var waBtn = document.getElementById("sim-wa-btn");
 
         function fmtBRL(n) {
@@ -1500,9 +1504,7 @@
         function fmtBRLInt(n) {
           return Math.round(n).toLocaleString("pt-BR");
         }
-        function parcelaCaminhao(credit) {
-          var c = caminhaoCredits;
-          var p = caminhaoParcelas;
+        function parcelaInterpolada(credit, c, p) {
           if (credit <= c[0]) return p[0];
           if (credit >= c[c.length - 1]) return p[p.length - 1];
           var i;
@@ -1535,18 +1537,28 @@
           maxL.textContent = "R$ " + fmtBRLInt(parseInt(range.max, 10)) + ",00";
           var promo;
           var full;
-          if (cfg.table) {
-            promo = parcelaCaminhao(credit);
+          if (cfg.imovelTable) {
+            promo = parcelaInterpolada(credit, imovelCredits, imovelMeiaParcelas);
+            full = promo * 2;
+            resultLabel.textContent = "MEIA PARCELA (ILUSTRATIVA)";
+            promoEl.textContent = "R$ " + fmtBRL(promo);
+            fullEl.textContent =
+              "Parcela integral estimada: R$ " + fmtBRL(full) + " (2× meia — proporcional entre faixas da tabela).";
+          } else if (cfg.table) {
+            promo = parcelaInterpolada(credit, caminhaoCredits, caminhaoParcelas);
             full = promo * fullOverPromo;
+            resultLabel.textContent = "PARCELA REFERÊNCIA (ILUSTRATIVA)";
             promoEl.textContent = "R$ " + fmtBRL(promo);
             fullEl.textContent =
               "100% (estim.): R$ " + fmtBRL(full) + " s/ desconto — entre faixas da tabela, proporcional.";
           } else {
             promo = credit * cfg.promo;
             full = credit * cfg.full;
+            resultLabel.textContent = "PARCELA REFERÊNCIA (ILUSTRATIVA)";
             promoEl.textContent = "R$ " + fmtBRL(promo);
             fullEl.textContent = "100%: R$ " + fmtBRL(full) + " s/ desconto referência";
           }
+          var msgParcela = cfg.imovelTable ? "Meia parcela ilustrativa" : "Parcela ilustrativa";
           var msg =
             "Olá, Danilo — simulação pelo site DMS.%0A%0A" +
             "Segmento: " +
@@ -1555,7 +1567,8 @@
             "Crédito alvo (referência): R$ " +
             fmtBRLInt(credit) +
             "%0A" +
-            "Parcela ilustrativa: R$ " +
+            msgParcela +
+            ": R$ " +
             fmtBRL(promo) +
             "%0A%0A" +
             "Quero confirmar condições reais com você.";
