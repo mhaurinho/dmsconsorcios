@@ -729,82 +729,141 @@
         text-decoration: none;
         color: var(--whatsapp) !important;
       }
-      .stories {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: 1fr;
-      }
-      @media (min-width: 720px) {
-        .stories {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (min-width: 1000px) {
-        .stories {
-          grid-template-columns: repeat(4, 1fr);
-        }
-      }
-      .story-card {
+      .depo-rotator {
         position: relative;
+        max-width: 52rem;
+        margin: 0 auto;
+        min-height: 13.5rem;
+        padding: 0;
+        border-radius: var(--radius);
+        background: linear-gradient(165deg, var(--bg-panel), #101010);
+        border: 1px solid rgba(197, 160, 40, 0.22);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+      .depo-slide {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 1.6rem 1.35rem 1.75rem;
+        opacity: 0;
+        transition: opacity 0.75s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .depo-slide.is-active {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1;
+      }
+      .depo-slide strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        color: var(--accent-gold-bright);
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+      .depo-slide .depo-tag {
+        display: block;
+        font-size: 0.82rem;
+        color: rgba(240, 242, 245, 0.88);
+        margin-bottom: 0.75rem;
+      }
+      .depo-slide blockquote {
+        margin: 0;
+        padding: 0 0 0 0.65rem;
+        border-left: 2px solid rgba(197, 160, 40, 0.5);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: rgba(245, 242, 235, 0.96);
+        font-family: var(--font-display);
+      }
+      .depo-rotator--static .depo-slide {
+        position: relative;
+        opacity: 1 !important;
+        pointer-events: auto;
+        z-index: auto;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .depo-rotator--static .depo-slide:last-child {
+        border-bottom: none;
+      }
+      .depo-rotator--static {
+        min-height: 0;
+      }
+      /* Faixa horizontal — contemplados em movimento suave */
+      .contemplados-strip {
+        position: relative;
+        margin: 1.75rem calc(50% - 50vw) 2.25rem;
+        width: 100vw;
+        max-width: 100vw;
+      }
+      .strip-marquee {
+        overflow: hidden;
+        padding: 0.35rem 0;
+        mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      }
+      .strip-track {
+        display: flex;
+        width: max-content;
+        gap: 1rem;
+        animation: strip-scroll 70s linear infinite;
+        will-change: transform;
+      }
+      .strip-marquee:hover .strip-track {
+        animation-play-state: paused;
+      }
+      .strip-marquee:focus-within .strip-track {
+        animation-play-state: paused;
+      }
+      @keyframes strip-scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .strip-group {
+        display: flex;
+        gap: 1rem;
+        flex-shrink: 0;
+        align-items: stretch;
+      }
+      .strip-item {
+        position: relative;
+        flex: 0 0 clamp(160px, 22vw, 220px);
+        width: clamp(160px, 22vw, 220px);
+        height: clamp(220px, 30vw, 280px);
         border-radius: var(--radius);
         overflow: hidden;
-        min-height: 280px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(197, 160, 40, 0.25);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
         background: var(--bg-elevated);
       }
-      /* Foto: apenas <img class="story-img"> (caminho relativo à pasta deste HTML) */
-      .story-img {
-        position: absolute;
-        inset: 0;
+      .strip-item img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
-        z-index: 0;
         display: block;
       }
-      .story-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        background: linear-gradient(180deg, transparent 35%, rgba(5, 7, 12, 0.92) 100%);
-        pointer-events: none;
-      }
-      .story-cap {
+      .strip-item figcaption {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 2;
-        padding: 1.1rem 1rem 1.15rem;
-      }
-      .story-cap strong {
-        display: block;
-        font-family: var(--font-display);
-        font-size: 1.15rem;
-        color: var(--accent-gold-bright);
+        margin: 0;
+        padding: 0.45rem 0.5rem;
+        font-size: 0.72rem;
         font-weight: 700;
-        line-height: 1.2;
+        text-align: center;
+        color: var(--accent-gold-bright);
+        background: linear-gradient(180deg, transparent, rgba(5, 6, 8, 0.92));
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       }
-      .story-cap .story-sub {
-        display: block;
-        font-size: 0.82rem;
-        color: rgba(240, 242, 245, 0.88);
-        margin-top: 0.15rem;
-      }
-      .story-pitch {
-        margin: 0.5rem 0 0;
-        padding: 0;
-        font-size: 0.8rem;
-        line-height: 1.45;
-        font-style: normal;
-        font-weight: 400;
-        color: rgba(245, 240, 230, 0.96);
-        border-left: 2px solid rgba(197, 160, 40, 0.45);
-        padding-left: 0.55rem;
-      }
-      .steps {
         display: grid;
         gap: 1.25rem;
       }
@@ -889,6 +948,23 @@
         }
         .hero-frame:hover .hero-photo {
           transform: none;
+        }
+        .strip-track {
+          animation: none !important;
+          transform: none !important;
+          flex-wrap: wrap;
+          justify-content: center;
+          width: 100%;
+          max-width: var(--max);
+          margin-inline: auto;
+        }
+        .strip-marquee {
+          overflow: visible;
+          mask-image: none;
+          -webkit-mask-image: none;
+        }
+        .strip-group[aria-hidden="true"] {
+          display: none;
         }
       }
       .legal {
@@ -1058,86 +1134,195 @@
         <div class="wrap">
           <h2 class="section-title" id="contemplados-title">Clientes <span class="hl">contemplados</span></h2>
           <p class="section-intro">
-            Da esquerda pra direita: quem já contemplou e topou aparecer aqui — cada um com a frase do jeito que
-            falou com a gente. Prazo e regras de cada caso seguem o regulamento do grupo.
+            Quem já foi contemplado com a DMS — o registro em fotos e, abaixo, um pouco de como cada um viveu
+            essa conquista.
           </p>
-          <div class="stories">
-            <article class="story-card">
-              <img
-                class="story-img"
-                src="assets/clientes/contemplado-01.png"
-                alt="Edson, contemplado em consórcio."
-                width="640"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="story-cap">
-                <strong>Edson</strong>
-                <span class="story-sub">Contemplado</span>
-                <p class="story-pitch">
-                  “Fazer o consórcio foi a melhor coisa que eu fiz — demorou o tempo que tinha que demorar, mas valeu
-                  cada parcela.”
-                </p>
+        </div>
+        <div class="contemplados-strip">
+          <p class="sr-only">Fotos de contemplados em sequência. A rolagem pausa ao focar ou ao passar o ponteiro.</p>
+          <div class="strip-marquee" tabindex="0">
+            <div class="strip-track">
+              <div class="strip-group">
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-01.png"
+                    alt="Edson, contemplado."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Edson</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-02.png"
+                    alt="Gleison Jr., contemplado."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Gleison Jr.</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-03.png"
+                    alt="Mauro Andrade, contemplado."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Mauro Andrade</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-04-casa.png"
+                    alt="Oliver Felipe, contemplado."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Oliver Felipe</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-05.jpeg"
+                    alt="Contemplado DMS."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-06.jpeg"
+                    alt="Contemplado DMS."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-07.jpeg"
+                    alt="Contemplado DMS."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-08.jpeg"
+                    alt="Contemplado DMS."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img
+                    src="assets/clientes/contemplado-09.jpeg"
+                    alt="Contemplado DMS."
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="500"
+                  />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
               </div>
-            </article>
-            <article class="story-card">
-              <img
-                class="story-img"
-                src="assets/clientes/contemplado-02.png"
-                alt="Gleison Jr., contemplado em consórcio."
-                width="640"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="story-cap">
-                <strong>Gleison Jr.</strong>
-                <span class="story-sub">Contemplado</span>
-                <p class="story-pitch">
-                  “Eu achava que era papo de vendedor, mas quando contemplou a gente já tava com a viagem na cabeça —
-                  virou realidade mesmo.”
-                </p>
+              <div class="strip-group" aria-hidden="true">
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-01.png" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Edson</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-02.png" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Gleison Jr.</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-03.png" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Mauro Andrade</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-04-casa.png" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Oliver Felipe</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-05.jpeg" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-06.jpeg" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-07.jpeg" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-08.jpeg" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
+                <figure class="strip-item">
+                  <img src="assets/clientes/contemplado-09.jpeg" alt="" loading="lazy" decoding="async" width="400" height="500" />
+                  <figcaption>Contemplado</figcaption>
+                </figure>
               </div>
-            </article>
-            <article class="story-card">
-              <img
-                class="story-img"
-                src="assets/clientes/contemplado-03.png"
-                alt="Mauro Andrade, contemplado em consórcio."
-                width="640"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="story-cap">
-                <strong>Mauro Andrade</strong>
-                <span class="story-sub">Contemplado</span>
-                <p class="story-pitch">
-                  “Tinha hora que eu ficava nervoso com prazo, mas o Danilo ia me explicando passo a passo — no fim
-                  deu certo e eu saí mais leve.”
-                </p>
-              </div>
-            </article>
-            <article class="story-card">
-              <img
-                class="story-img"
-                src="assets/clientes/contemplado-04-casa.png"
-                alt="Oliver Felipe, contemplado em consórcio de imóvel."
-                width="640"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-              <div class="story-cap">
-                <strong>Oliver Felipe</strong>
-                <span class="story-sub">Contemplado</span>
-                <p class="story-pitch">
-                  “A gente sonhava com a casa e achava que era coisa de outro mundo — hoje a gente mora nela. Foi
-                  surreal quando veio a carta.”
-                </p>
-              </div>
-            </article>
+            </div>
+          </div>
+        </div>
+        <div class="wrap">
+          <div
+            id="depo-rotator"
+            class="depo-rotator"
+            aria-live="polite"
+            aria-label="Depoimentos de clientes contemplados"
+          >
+            <div class="depo-slide is-active">
+              <strong>Edson</strong>
+              <span class="depo-tag">Contemplado</span>
+              <blockquote>
+                “Fazer o consórcio foi a melhor coisa que eu fiz — demorou o tempo que tinha que demorar, mas valeu
+                cada parcela.”
+              </blockquote>
+            </div>
+            <div class="depo-slide">
+              <strong>Gleison Jr.</strong>
+              <span class="depo-tag">Contemplado</span>
+              <blockquote>
+                “Eu achava que era papo de vendedor, mas quando contemplou a gente já tava com a viagem na cabeça —
+                virou realidade mesmo.”
+              </blockquote>
+            </div>
+            <div class="depo-slide">
+              <strong>Mauro Andrade</strong>
+              <span class="depo-tag">Contemplado</span>
+              <blockquote>
+                “Tinha hora que eu ficava nervoso com prazo, mas o Danilo ia me explicando passo a passo — no fim
+                deu certo e eu saí mais leve.”
+              </blockquote>
+            </div>
+            <div class="depo-slide">
+              <strong>Oliver Felipe</strong>
+              <span class="depo-tag">Contemplado</span>
+              <blockquote>
+                “A gente sonhava com a casa e achava que era coisa de outro mundo — hoje a gente mora nela. Foi
+                surreal quando veio a carta.”
+              </blockquote>
+            </div>
           </div>
         </div>
       </section>
@@ -1330,6 +1515,44 @@
         });
         range.addEventListener("input", update);
         syncSegment("veiculos");
+      })();
+    </script>
+    <script>
+      (function () {
+        var root = document.getElementById("depo-rotator");
+        if (!root) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          root.classList.add("depo-rotator--static");
+          root.querySelectorAll(".depo-slide").forEach(function (el) {
+            el.classList.add("is-active");
+          });
+          return;
+        }
+        var slides = root.querySelectorAll(".depo-slide");
+        var n = slides.length;
+        if (n < 2) return;
+        function randomDelay() {
+          return 5000;
+        }
+        function randomIndex(exclude) {
+          var j;
+          do {
+            j = Math.floor(Math.random() * n);
+          } while (j === exclude);
+          return j;
+        }
+        var cur = randomIndex(-1);
+        slides.forEach(function (el, i) {
+          el.classList.toggle("is-active", i === cur);
+        });
+        function tick() {
+          var next = randomIndex(cur);
+          slides[cur].classList.remove("is-active");
+          cur = next;
+          slides[cur].classList.add("is-active");
+          setTimeout(tick, randomDelay());
+        }
+        setTimeout(tick, randomDelay());
       })();
     </script>
   </body>
