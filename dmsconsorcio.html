@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DMS Consórcios — Agro, carro, moto e imóvel</title>
+    <meta
+      name="description"
+      content="DMS Consórcios: consórcio para agro, carro, moto e imóvel. Fale com Danilo Andrade no WhatsApp."
+    />
+    <!-- Imagens: pasta assets/ na MESMA pasta deste arquivo. Se aparecer "DA" no lugar da foto, o caminho está errado (ex.: só o .html na Área de trabalho sem copiar assets/). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-deep: #0c0c0c;
+        --bg-deeper: #050505;
+        --bg-panel: #141414;
+        --bg-elevated: #1c1c1c;
+        --accent-gold: #c5a028;
+        --accent-gold-bright: #ffd844;
+        --accent-gold-dim: #8b6508;
+        --accent-orange: #e69500;
+        --accent-orange-deep: #a86a00;
+        --gold-metallic: linear-gradient(
+          118deg,
+          #8b6508 0%,
+          #c5a028 22%,
+          #ffe566 42%,
+          #ffd700 50%,
+          #c5a028 58%,
+          #8b6508 100%
+        );
+        --text: #ececec;
+        --text-muted: #9a9a9a;
+        --whatsapp: #25d366;
+        --glass: rgba(16, 16, 16, 0.72);
+        --glass-border: rgba(197, 160, 40, 0.18);
+        --font-sans: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-display: "Montserrat", system-ui, sans-serif;
+        --radius: 14px;
+        --radius-pill: 999px;
+        --max: 1120px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 1.02rem;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg-deeper);
+        min-height: 100vh;
+      }
+      a {
+        color: var(--accent-gold-bright);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+      a:hover {
+        color: var(--accent-gold-bright);
+        filter: brightness(1.12);
+      }
+      .wrap {
+        width: min(100% - 1.5rem, var(--max));
+        margin-inline: auto;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .page-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background:
+          radial-gradient(ellipse 90% 70% at 50% 18%, rgba(197, 160, 40, 0.07), transparent 58%),
+          radial-gradient(ellipse 55% 45% at 100% 25%, rgba(230, 149, 0, 0.06), transparent 52%),
+          radial-gradient(ellipse 80% 80% at 50% 120%, rgba(0, 0, 0, 0.85), transparent 45%),
+          linear-gradient(180deg, #101010 0%, var(--bg-deeper) 55%, #000000 100%);
+        pointer-events: none;
+      }
+      .page-grain {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+      }
+      .site-header {
+        padding: 1rem 0 0;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: linear-gradient(180deg, rgba(8, 8, 8, 0.96) 0%, rgba(8, 8, 8, 0.72) 78%, transparent 100%);
+      }
+      .nav-pill {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem 1rem;
+        padding: 0.55rem 0.85rem 0.55rem 1rem;
+        border-radius: var(--radius-pill);
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none !important;
+        line-height: 0;
+      }
+      .logo-img {
+        height: 44px;
+        width: auto;
+        max-width: min(220px, 48vw);
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 2px 24px rgba(197, 160, 40, 0.22));
+      }
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links a {
+        color: rgba(240, 242, 245, 0.92) !important;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+      }
+      .nav-links a:hover {
+        color: var(--accent-gold-bright) !important;
+      }
+      .header-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(145deg, var(--accent-gold-bright), var(--accent-gold), var(--accent-gold-dim));
+        color: #0a0804 !important;
+        font-weight: 800;
+        font-size: 0.82rem;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 4px 22px rgba(197, 160, 40, 0.28);
+      }
+      .header-cta:hover {
+        filter: brightness(1.05);
+        color: #0a0906 !important;
+      }
+      section {
+        padding: 3.25rem 0;
+      }
+      .surface-alt {
+        background: rgba(0, 0, 0, 0.35);
+      }
+      .hero {
+        padding-top: 2rem;
+        padding-bottom: 3.5rem;
+      }
+      .hero-grid {
+        display: grid;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      @media (min-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 0.95fr 1.12fr;
+          gap: 3rem;
+        }
+      }
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent-gold-bright);
+        margin-bottom: 0.85rem;
+      }
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4.8vw, 2.95rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.12;
+        margin: 0 0 1rem;
+        color: var(--text);
+      }
+      .hero h1 .hl,
+      .section-title .hl {
+        background: var(--gold-metallic);
+        background-size: 220% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        font-style: normal;
+        animation: dms-gold-flow 8s ease-in-out infinite;
+      }
+      @keyframes dms-gold-flow {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      .hero-lead {
+        margin: 0 0 1.75rem;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        max-width: 40ch;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.88rem 1.45rem;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(145deg, var(--accent-gold), var(--accent-orange));
+        color: #0a0804 !important;
+        font-weight: 800;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 32px rgba(197, 160, 40, 0.28);
+      }
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.88rem 1.25rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text) !important;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.92rem;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(197, 160, 40, 0.45);
+      }
+      .hero-frame {
+        position: relative;
+        border-radius: calc(var(--radius) + 4px);
+        padding: 3px;
+        background: linear-gradient(145deg, rgba(197, 160, 40, 0.45), rgba(255, 255, 255, 0.06));
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+        transition:
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.55s ease;
+      }
+      .hero-frame:hover {
+        transform: translateY(-8px);
+        box-shadow:
+          0 40px 100px rgba(0, 0, 0, 0.58),
+          0 0 0 1px rgba(197, 160, 40, 0.32),
+          0 0 88px rgba(197, 160, 40, 0.22);
+      }
+      .hero-chamfer-mark {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 38px;
+        height: 38px;
+        z-index: 3;
+        pointer-events: none;
+        background: linear-gradient(155deg, var(--accent-orange) 0%, var(--accent-orange-deep) 100%);
+        clip-path: polygon(0 100%, 0 30%, 72% 100%);
+        opacity: 0.92;
+        filter: drop-shadow(0 0 12px rgba(230, 149, 0, 0.4));
+      }
+      .hero-back-glow {
+        position: absolute;
+        inset: -14%;
+        z-index: 0;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(197, 160, 40, 0.42), transparent 72%);
+        filter: blur(32px);
+        opacity: 0.75;
+        animation: hero-glow-breathe 6s ease-in-out infinite;
+      }
+      @keyframes hero-glow-breathe {
+        0%,
+        100% {
+          opacity: 0.5;
+          transform: scale(0.92);
+        }
+        50% {
+          opacity: 0.95;
+          transform: scale(1.06);
+        }
+      }
+      .hero-frame::before,
+      .hero-frame::after {
+        content: "";
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border: 2px solid var(--accent-gold);
+        pointer-events: none;
+        opacity: 0.85;
+        z-index: 4;
+      }
+      .hero-frame::before {
+        top: -10px;
+        right: -10px;
+        border-left: none;
+        border-bottom: none;
+        border-radius: 0 12px 0 0;
+      }
+      .hero-frame::after {
+        bottom: -10px;
+        left: -10px;
+        border-right: none;
+        border-top: none;
+        border-radius: 0 0 0 12px;
+      }
+      .hero-card-inner {
+        position: relative;
+        z-index: 1;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--bg-panel);
+        border: 1px solid rgba(197, 160, 40, 0.14);
+      }
+      .hero-visual {
+        position: relative;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        background: #0c0c0c;
+      }
+      @media (min-width: 700px) {
+        .hero-visual {
+          aspect-ratio: 3/4;
+          min-height: 420px;
+        }
+      }
+      /* .hero-placeholder permanece como fallback se a imagem falhar ao carregar */
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 22%;
+        z-index: 1;
+        transform: scale(1.001);
+        transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+      .hero-photo.hero-photo--err {
+        display: none;
+      }
+      .hero-frame:hover .hero-photo {
+        transform: scale(1.06);
+      }
+      .hero-visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(
+          118deg,
+          transparent 36%,
+          rgba(255, 255, 255, 0) 44%,
+          rgba(255, 255, 255, 0.12) 49.5%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.1) 50.5%,
+          rgba(255, 255, 255, 0) 56%,
+          transparent 64%
+        );
+        background-size: 240% 240%;
+        animation: hero-shine-sweep 8s ease-in-out infinite;
+      }
+      @keyframes hero-shine-sweep {
+        0%,
+        12% {
+          background-position: 120% 40%;
+          opacity: 0;
+        }
+        22% {
+          opacity: 1;
+        }
+        42%,
+        100% {
+          background-position: -30% 60%;
+          opacity: 0;
+        }
+      }
+      .hero-placeholder {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        background:
+          linear-gradient(160deg, rgba(36, 36, 36, 0.96) 0%, #0a0a0a 55%, #121212),
+          radial-gradient(circle at 30% 20%, rgba(197, 160, 40, 0.12), transparent 55%);
+      }
+      .hero-placeholder-initials {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 11vw, 4rem);
+        font-weight: 600;
+        color: rgba(240, 242, 245, 0.94);
+        letter-spacing: 0.04em;
+        line-height: 1;
+      }
+      .hero-placeholder-caption {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--accent-gold-bright);
+      }
+      .hero-glass-bar {
+        position: absolute;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        z-index: 4;
+        padding: 0.65rem 1rem;
+        border-radius: 12px;
+        background: rgba(10, 10, 10, 0.72);
+        border: 1px solid rgba(197, 160, 40, 0.2);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .hero-glass-bar strong {
+        display: block;
+        font-family: var(--font-sans);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent-gold-bright);
+      }
+      .hero-glass-bar span {
+        font-size: 0.88rem;
+        color: rgba(240, 242, 245, 0.92);
+      }
+      .hero-caption {
+        padding: 1rem 1.15rem 1.2rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .hero-caption strong {
+        color: var(--text);
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.55rem, 3.2vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.5rem;
+        text-align: center;
+      }
+      .section-intro {
+        margin: 0 auto 2rem;
+        color: var(--text-muted);
+        max-width: 52ch;
+        text-align: center;
+      }
+      .sim-head {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .sim-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid rgba(230, 149, 0, 0.42);
+        color: rgba(255, 224, 170, 0.96) !important;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        background: rgba(230, 149, 0, 0.08);
+      }
+      .sim-pill:hover {
+        background: rgba(230, 149, 0, 0.16);
+      }
+      .sim-head h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.65rem, 3.5vw, 2.15rem);
+        margin: 0 0 0.5rem;
+        color: var(--text);
+      }
+      .sim-head h2 em {
+        color: var(--accent-orange);
+        font-style: italic;
+        font-family: var(--font-display);
+      }
+      .sim-head p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.98rem;
+      }
+      .sim-card {
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 1.5rem 1.35rem 1.6rem;
+        border-radius: calc(var(--radius) + 4px);
+        background: var(--bg-panel);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      }
+      .sim-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 0.65rem;
+      }
+      .sim-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .sim-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.65rem 0.4rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.2);
+        color: var(--text-muted) !important;
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .sim-tab:hover {
+        border-color: rgba(197, 160, 40, 0.35);
+        color: var(--text) !important;
+      }
+      .sim-tab[aria-selected="true"] {
+        background: linear-gradient(145deg, var(--accent-orange), var(--accent-orange-deep));
+        border-color: transparent;
+        color: #0a0804 !important;
+      }
+      .sim-tab .ic {
+        font-size: 1rem;
+      }
+      .sim-credit-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--accent-orange);
+        margin-bottom: 0.35rem;
+      }
+      .sim-credit-val {
+        font-family: var(--font-display);
+        font-size: clamp(1.85rem, 5vw, 2.35rem);
+        margin: 0 0 1rem;
+        line-height: 1.1;
+      }
+      .sim-credit-val .prefix,
+      .sim-credit-val .suffix {
+        font-size: 0.55em;
+        color: var(--accent-orange);
+        font-weight: 600;
+      }
+      .sim-credit-val .num {
+        color: var(--text);
+        font-weight: 600;
+      }
+      input[type="range"].sim-range {
+        width: 100%;
+        accent-color: var(--accent-orange);
+        margin-bottom: 0.35rem;
+      }
+      .sim-range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-bottom: 1.35rem;
+      }
+      .sim-result {
+        padding: 1.1rem 1.15rem;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 1.25rem;
+      }
+      .sim-result-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: var(--accent-orange);
+        margin-bottom: 0.35rem;
+      }
+      .sim-result-val {
+        font-family: var(--font-display);
+        font-size: 1.85rem;
+        font-weight: 700;
+        color: var(--accent-orange);
+        margin: 0 0 0.35rem;
+      }
+      .sim-result-note {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+      .sim-foot {
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+      }
+      .sim-disclaimer {
+        margin: 1rem 0 0;
+        font-size: 0.72rem;
+        line-height: 1.45;
+        color: #6d7685;
+        text-align: center;
+      }
+      .pillars {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 640px) {
+        .pillars {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1000px) {
+        .pillars {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .pillar {
+        background: var(--bg-elevated);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius);
+        padding: 1.35rem 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      .pillar:hover {
+        border-color: rgba(197, 160, 40, 0.35);
+        transform: translateY(-2px);
+      }
+      .pillar-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 10px;
+        background: rgba(197, 160, 40, 0.12);
+        color: var(--accent-gold);
+        display: grid;
+        place-items: center;
+        font-size: 1.2rem;
+      }
+      .pillar h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+      .pillar p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        flex: 1;
+      }
+      .pillar a {
+        font-weight: 700;
+        font-size: 0.86rem;
+        text-decoration: none;
+        color: var(--whatsapp) !important;
+      }
+      .stories {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 720px) {
+        .stories {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1000px) {
+        .stories {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .story-card {
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        min-height: 280px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--bg-elevated);
+      }
+      /* Foto: apenas <img class="story-img"> (caminho relativo à pasta deste HTML) */
+      .story-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        display: block;
+      }
+      .story-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(180deg, transparent 35%, rgba(5, 7, 12, 0.92) 100%);
+        pointer-events: none;
+      }
+      .story-cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 1.1rem 1rem 1.15rem;
+      }
+      .story-cap strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        color: var(--accent-gold-bright);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .story-cap .story-sub {
+        display: block;
+        font-size: 0.82rem;
+        color: rgba(240, 242, 245, 0.88);
+        margin-top: 0.15rem;
+      }
+      .story-pitch {
+        margin: 0.5rem 0 0;
+        padding: 0;
+        font-size: 0.8rem;
+        line-height: 1.45;
+        font-style: normal;
+        font-weight: 400;
+        color: rgba(245, 240, 230, 0.96);
+        border-left: 2px solid rgba(197, 160, 40, 0.45);
+        padding-left: 0.55rem;
+      }
+      .steps {
+        display: grid;
+        gap: 1.25rem;
+      }
+      @media (min-width: 720px) {
+        .steps {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .step {
+        padding: 1.25rem;
+        border-radius: var(--radius);
+        border: 1px dashed rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .step-num {
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        color: var(--accent-gold);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+      .step h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.02rem;
+      }
+      .step p {
+        margin: 0;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+      .cta-band {
+        text-align: center;
+        padding: 2.75rem 1.5rem;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, var(--bg-panel), #0d1018);
+        border: 1px solid rgba(197, 160, 40, 0.22);
+        margin: 2rem 0 0;
+      }
+      .cta-band h2 {
+        font-family: var(--font-display);
+        margin: 0 0 0.5rem;
+        font-size: 1.45rem;
+      }
+      .cta-band p {
+        margin: 0 0 1.25rem;
+        color: var(--text-muted);
+      }
+      .site-footer {
+        padding: 2.5rem 0 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+      .footer-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 640px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .site-footer strong {
+        color: var(--text);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-back-glow,
+        .hero-visual::after {
+          animation: none !important;
+        }
+        .hero h1 .hl,
+        .section-title .hl {
+          animation: none !important;
+        }
+        .hero-frame,
+        .hero-photo {
+          transition: none !important;
+        }
+        .hero-frame:hover {
+          transform: none;
+          box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+        }
+        .hero-frame:hover .hero-photo {
+          transform: none;
+        }
+      }
+      .legal {
+        margin-top: 1.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.74rem;
+        line-height: 1.5;
+        color: #6d7685;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-bg" aria-hidden="true"></div>
+    <div class="page-grain" aria-hidden="true"></div>
+    <a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <div class="nav-pill">
+          <a class="logo" href="#inicio"
+            ><img
+              class="logo-img"
+              src="assets/dms-logo-marca.png"
+              alt="DMS Consórcio"
+              width="220"
+              height="64"
+              decoding="async"
+          /></a>
+          <nav aria-label="Principal">
+            <ul class="nav-links">
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#simulador">Simulador</a></li>
+              <li><a href="#contemplados">Contemplados</a></li>
+              <li><a href="#segmentos">Segmentos</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </nav>
+          <a
+            class="header-cta"
+            href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20quero%20falar%20sobre%20cons%C3%B3rcio%20(DMS)."
+            target="_blank"
+            rel="noopener noreferrer"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="eyebrow">Consultoria · campo e cidade</p>
+            <h1 id="hero-title">Planejamento que transforma metas em <span class="hl">conquista.</span></h1>
+            <p class="hero-lead">
+              Agro, imóvel, carro e moto — atendimento com <strong>Danilo Andrade</strong>, com mais de uma década
+              acompanhando grupos e realizações de crédito.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="btn-primary"
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20quero%20simular%20cons%C3%B3rcio%20(DMS)."
+                target="_blank"
+                rel="noopener noreferrer"
+                >Começar agora</a
+              >
+              <a class="btn-ghost" href="#contemplados">Ver contemplados</a>
+            </div>
+          </div>
+
+          <div class="hero-frame">
+            <div class="hero-back-glow" aria-hidden="true"></div>
+            <div class="hero-card-inner">
+              <figure class="hero-figure" style="margin: 0">
+                <div class="hero-visual">
+                  <div class="hero-placeholder" aria-hidden="true">
+                    <span class="hero-placeholder-initials">DA</span>
+                    <span class="hero-placeholder-caption">DMS Consórcios</span>
+                  </div>
+                  <img
+                    class="hero-photo"
+                    src="assets/danilo-consultor.png"
+                    alt="Danilo Andrade, consultor DMS Consórcios."
+                    width="800"
+                    height="1000"
+                    decoding="async"
+                    fetchpriority="high"
+                    onerror="this.classList.add('hero-photo--err')"
+                  />
+                  <div class="hero-chamfer-mark" aria-hidden="true"></div>
+                  <div class="hero-glass-bar">
+                    <strong>Danilo Andrade</strong>
+                    <span>Consultor de consórcios</span>
+                  </div>
+                </div>
+              </figure>
+              <p class="hero-caption">
+                <strong>Presença e clareza</strong>
+                Da simulação à documentação — transparência sobre administradora e regulamento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="simulador" class="surface-alt" aria-labelledby="sim-title">
+        <div class="wrap">
+          <div class="sim-head">
+            <a
+              class="sim-pill"
+              href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20prefiro%20falar%20direto%20com%20voc%C3%AA%20(DMS)."
+              target="_blank"
+              rel="noopener noreferrer"
+              >💬 Atendimento humanizado</a
+            >
+            <h2 id="sim-title">Simule e dê o <em>primeiro passo</em></h2>
+            <p>Descubra uma faixa de parcela de referência e envie tudo pelo WhatsApp em um clique.</p>
+          </div>
+
+          <div class="sim-card">
+            <p class="sim-label" id="sim-dream-label">Qual é o seu sonho?</p>
+            <div class="sim-tabs" role="tablist" aria-labelledby="sim-dream-label">
+              <button type="button" class="sim-tab" role="tab" data-segment="veiculos" aria-selected="true">
+                <span class="ic" aria-hidden="true">🚗</span> Veículos
+              </button>
+              <button type="button" class="sim-tab" role="tab" data-segment="imoveis" aria-selected="false">
+                <span class="ic" aria-hidden="true">🏠</span> Imóveis
+              </button>
+              <button type="button" class="sim-tab" role="tab" data-segment="agro" aria-selected="false">
+                <span class="ic" aria-hidden="true">🌾</span> Agro
+              </button>
+            </div>
+
+            <p class="sim-credit-label">CRÉDITO SELECIONADO</p>
+            <p class="sim-credit-val" id="sim-credit-display" aria-live="polite">
+              <span class="prefix">R$</span> <span class="num" id="sim-credit-num">50.000</span
+              ><span class="suffix">,00</span>
+            </p>
+            <label class="sr-only" for="sim-range">Valor do crédito</label>
+            <input type="range" class="sim-range" id="sim-range" min="15000" max="80000" step="500" value="50000" />
+            <div class="sim-range-labels">
+              <span id="sim-min-label">R$ 15.000,00</span>
+              <span id="sim-max-label">R$ 80.000,00</span>
+            </div>
+
+            <div class="sim-result">
+              <p class="sim-result-label">PARCELA REFERÊNCIA (ILUSTRATIVA)</p>
+              <p class="sim-result-val" id="sim-parcela-promo">R$ 0,00</p>
+              <p class="sim-result-note" id="sim-parcela-full">100%: R$ 0,00 s/ desconto referência</p>
+            </div>
+
+            <a class="btn-primary" style="width: 100%; text-align: center" id="sim-wa-btn" href="#" target="_blank" rel="noopener noreferrer"
+              >📱 Enviar no WhatsApp</a
+            >
+            <p class="sim-foot">✓ Simulação sem compromisso — confirmação humana com o consultor</p>
+            <p class="sim-disclaimer">
+              Valores meramente ilustrativos (não constituem proposta da administradora). Prazo, taxa, seguro,
+              sorteios e lances seguem o regulamento do grupo escolhido. Confirme sempre com a DMS antes de
+              aderir.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contemplados" aria-labelledby="contemplados-title">
+        <div class="wrap">
+          <h2 class="section-title" id="contemplados-title">Clientes <span class="hl">contemplados</span></h2>
+          <p class="section-intro">
+            Da esquerda pra direita: quem já contemplou e topou aparecer aqui — cada um com a frase do jeito que
+            falou com a gente. Prazo e regras de cada caso seguem o regulamento do grupo.
+          </p>
+          <div class="stories">
+            <article class="story-card">
+              <img
+                class="story-img"
+                src="assets/clientes/contemplado-01.png"
+                alt="Edson, contemplado em consórcio."
+                width="640"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="story-cap">
+                <strong>Edson</strong>
+                <span class="story-sub">Contemplado</span>
+                <p class="story-pitch">
+                  “Fazer o consórcio foi a melhor coisa que eu fiz — demorou o tempo que tinha que demorar, mas valeu
+                  cada parcela.”
+                </p>
+              </div>
+            </article>
+            <article class="story-card">
+              <img
+                class="story-img"
+                src="assets/clientes/contemplado-02.png"
+                alt="Gleison Jr., contemplado em consórcio."
+                width="640"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="story-cap">
+                <strong>Gleison Jr.</strong>
+                <span class="story-sub">Contemplado</span>
+                <p class="story-pitch">
+                  “Eu achava que era papo de vendedor, mas quando contemplou a gente já tava com a viagem na cabeça —
+                  virou realidade mesmo.”
+                </p>
+              </div>
+            </article>
+            <article class="story-card">
+              <img
+                class="story-img"
+                src="assets/clientes/contemplado-03.png"
+                alt="Mauro Andrade, contemplado em consórcio."
+                width="640"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="story-cap">
+                <strong>Mauro Andrade</strong>
+                <span class="story-sub">Contemplado</span>
+                <p class="story-pitch">
+                  “Tinha hora que eu ficava nervoso com prazo, mas o Danilo ia me explicando passo a passo — no fim
+                  deu certo e eu saí mais leve.”
+                </p>
+              </div>
+            </article>
+            <article class="story-card">
+              <img
+                class="story-img"
+                src="assets/clientes/contemplado-04-casa.png"
+                alt="Oliver Felipe, contemplado em consórcio de imóvel."
+                width="640"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="story-cap">
+                <strong>Oliver Felipe</strong>
+                <span class="story-sub">Contemplado</span>
+                <p class="story-pitch">
+                  “A gente sonhava com a casa e achava que era coisa de outro mundo — hoje a gente mora nela. Foi
+                  surreal quando veio a carta.”
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="segmentos" class="surface-alt" aria-labelledby="segmentos-title">
+        <div class="wrap">
+          <h2 class="section-title" id="segmentos-title">O que você quer <span class="hl">conquistar?</span></h2>
+          <p class="section-intro">
+            Escolha o tema — a conversa já abre no WhatsApp com o contexto certo para o Danilo te atender.
+          </p>
+          <div class="pillars">
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🌾</div>
+              <h3>Agro e máquinas</h3>
+              <p>Tratores, implementos, colheitadeiras e apoio logístico ao ritmo do campo.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20%2F%20AGRO%20(m%C3%A1quina%20ou%20implemento)."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Agro</a
+              >
+            </article>
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🏠</div>
+              <h3>Imóveis</h3>
+              <p>Casa, apartamento ou terreno — planejamento de crédito com foco em patrimônio.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20IM%C3%93VEL."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Imóvel</a
+              >
+            </article>
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🚗</div>
+              <h3>Carro e utilitários</h3>
+              <p>Do primeiro carro ao upgrade — linhas para famílias e perfis exigentes.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20CARRO."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Carro</a
+              >
+            </article>
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🏍</div>
+              <h3>Moto e mobilidade</h3>
+              <p>Entrada acessível e moto para trabalho ou lazer — caminho claro desde o primeiro contato.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20MOTO."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Moto</a
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona" aria-labelledby="como-title">
+        <div class="wrap">
+          <h2 class="section-title" id="como-title">Como <span class="hl">seguimos</span> daqui</h2>
+          <p class="section-intro">
+            Sem complicação: você chama, a gente entende seu objetivo e apresenta opções alinhadas ao
+            regulamento do grupo.
+          </p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <h3>Conversa no WhatsApp</h3>
+              <p>Tipo de bem, faixa de parcela e prazo — para direcionar à administradora certa.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <h3>Simulação e transparência</h3>
+              <p>Condições conforme regulamento do grupo — sem surpresa na letra pequena.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <h3>Formalização</h3>
+              <p>Apoio na documentação até a entrada no grupo e o acompanhamento do plano.</p>
+            </div>
+          </div>
+
+          <div class="cta-band">
+            <h2>Pronto para simular?</h2>
+            <p>Resposta humana — não robô. Chame quando for bom pra você.</p>
+            <a
+              class="btn-primary"
+              href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20quero%20simular%20cons%C3%B3rcio%20(DMS)."
+              target="_blank"
+              rel="noopener noreferrer"
+              >Abrir WhatsApp</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contato">
+      <div class="wrap footer-grid">
+        <div>
+          <strong>DMS Consórcios</strong><br />
+          CNPJ 62.682.518/0001-54<br />
+          Danilo Andrade — consultoria e intermediação.<br />
+          <a href="https://www.instagram.com/danconsorcios_" target="_blank" rel="noopener noreferrer"
+            >Instagram @danconsorcios_</a
+          >
+        </div>
+        <div>
+          <strong>Contato</strong><br />
+          WhatsApp: <a href="https://wa.me/5513991006315">+55 13 99100-6315</a>
+        </div>
+      </div>
+      <div class="wrap">
+        <p class="legal">
+          Consórcio é administrado por instituição autorizada; condições (prazos, taxas, sorteios e lances)
+          estão no regulamento de cada grupo. A DMS Consórcios presta orientação e intermediação conforme
+          contrato com o cliente — confirme sempre a administradora e o regulamento antes de aderir. Esta
+          página é informativa e não substitui documentação oficial.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var waBase = "https://wa.me/5513991006315?text=";
+        var segments = {
+          veiculos: { min: 15000, max: 80000, step: 500, def: 50000, promo: 0.014375, full: 0.0215624, label: "Veículos" },
+          imoveis: { min: 100000, max: 500000, step: 5000, def: 200000, promo: 0.0102, full: 0.0153, label: "Imóveis" },
+          agro: { min: 80000, max: 400000, step: 5000, def: 150000, promo: 0.0116, full: 0.0174, label: "Agro" },
+        };
+        var current = "veiculos";
+        var range = document.getElementById("sim-range");
+        var tabs = document.querySelectorAll(".sim-tab");
+        var creditNum = document.getElementById("sim-credit-num");
+        var minL = document.getElementById("sim-min-label");
+        var maxL = document.getElementById("sim-max-label");
+        var promoEl = document.getElementById("sim-parcela-promo");
+        var fullEl = document.getElementById("sim-parcela-full");
+        var waBtn = document.getElementById("sim-wa-btn");
+
+        function fmtBRL(n) {
+          return n.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function fmtBRLInt(n) {
+          return Math.round(n).toLocaleString("pt-BR");
+        }
+        function syncSegment(seg) {
+          var cfg = segments[seg];
+          current = seg;
+          range.min = String(cfg.min);
+          range.max = String(cfg.max);
+          range.step = String(cfg.step);
+          var v = parseInt(range.value, 10);
+          if (v < cfg.min || v > cfg.max) range.value = String(cfg.def);
+          tabs.forEach(function (t) {
+            t.setAttribute("aria-selected", t.getAttribute("data-segment") === seg ? "true" : "false");
+          });
+          update();
+        }
+        function update() {
+          var cfg = segments[current];
+          var credit = parseInt(range.value, 10);
+          creditNum.textContent = fmtBRLInt(credit);
+          minL.textContent = "R$ " + fmtBRLInt(parseInt(range.min, 10)) + ",00";
+          maxL.textContent = "R$ " + fmtBRLInt(parseInt(range.max, 10)) + ",00";
+          var promo = credit * cfg.promo;
+          var full = credit * cfg.full;
+          promoEl.textContent = "R$ " + fmtBRL(promo);
+          fullEl.textContent = "100%: R$ " + fmtBRL(full) + " s/ desconto referência";
+          var msg =
+            "Olá, Danilo — simulação pelo site DMS.%0A%0A" +
+            "Segmento: " +
+            encodeURIComponent(cfg.label) +
+            "%0A" +
+            "Crédito alvo (referência): R$ " +
+            fmtBRLInt(credit) +
+            "%0A" +
+            "Parcela ilustrativa: R$ " +
+            fmtBRL(promo) +
+            "%0A%0A" +
+            "Quero confirmar condições reais com você.";
+          waBtn.setAttribute("href", waBase + msg);
+        }
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            syncSegment(tab.getAttribute("data-segment"));
+          });
+        });
+        range.addEventListener("input", update);
+        syncSegment("veiculos");
+      })();
+    </script>
+  </body>
+</html>
