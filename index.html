@@ -8,6 +8,24 @@
       name="description"
       content="DMS Consórcios: carro, moto, imóvel e máquinas agrícolas. Fale com Danilo Andrade no WhatsApp."
     />
+    <!-- Preview em redes / WhatsApp: troque a URL se usar domínio próprio -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DMS Consórcios — Carro, moto, imóvel e máquinas agrícolas" />
+    <meta
+      property="og:description"
+      content="Simulador e atendimento humano com o Danilo — consórcio com seriedade de longo prazo."
+    />
+    <meta property="og:url" content="https://dmsconsorcio.netlify.app/" />
+    <meta property="og:image" content="https://dmsconsorcio.netlify.app/assets/dms-logo-marca.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DMS Consórcios — Carro, moto, imóvel e máquinas agrícolas" />
+    <meta
+      name="twitter:description"
+      content="Simulador e atendimento humano com o Danilo — consórcio com seriedade de longo prazo."
+    />
+    <meta name="twitter:image" content="https://dmsconsorcio.netlify.app/assets/dms-logo-marca.png" />
+    <link rel="canonical" href="https://dmsconsorcio.netlify.app/" />
     <!-- Imagens: pasta assets/ na MESMA pasta deste arquivo. Se aparecer "DA" no lugar da foto, o caminho está errado (ex.: só o .html na Área de trabalho sem copiar assets/). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -939,6 +957,64 @@
         margin: 0 0 1.25rem;
         color: var(--text-muted);
       }
+      .share-band {
+        padding: 2.25rem 0 2.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .share-intro {
+        margin-bottom: 1.25rem !important;
+        max-width: 42ch;
+      }
+      .share-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        justify-content: center;
+        align-items: center;
+      }
+      .share-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.55rem 1rem;
+        border-radius: var(--radius-pill);
+        font-family: inherit;
+        font-size: 0.86rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid rgba(197, 160, 40, 0.35);
+        background: rgba(197, 160, 40, 0.1);
+        color: var(--text) !important;
+        text-decoration: none !important;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+      .share-btn:hover {
+        border-color: rgba(255, 212, 100, 0.55);
+        background: rgba(197, 160, 40, 0.16);
+      }
+      .share-btn--native {
+        border-color: rgba(255, 212, 100, 0.45);
+        background: linear-gradient(145deg, rgba(230, 149, 0, 0.25), rgba(168, 106, 0, 0.2));
+      }
+      .share-btn--wa {
+        border-color: rgba(37, 211, 102, 0.45);
+        background: rgba(37, 211, 102, 0.12);
+        color: #afffc8 !important;
+      }
+      .share-btn--wa:hover {
+        background: rgba(37, 211, 102, 0.2);
+        border-color: var(--whatsapp);
+      }
+      .share-btn--ig {
+        border-color: rgba(225, 48, 108, 0.35);
+        background: rgba(225, 48, 108, 0.08);
+      }
+      .share-btn--copy {
+        background: rgba(255, 255, 255, 0.04);
+      }
       .site-footer {
         padding: 2.5rem 0 2rem;
         border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1028,6 +1104,7 @@
               <li><a href="#simulador">Simulador</a></li>
               <li><a href="#contemplados">Contemplados</a></li>
               <li><a href="#segmentos">Segmentos</a></li>
+              <li><a href="#compartilhar">Indicar</a></li>
               <li><a href="#contato">Contato</a></li>
             </ul>
           </nav>
@@ -1456,6 +1533,37 @@
           </div>
         </div>
       </section>
+
+      <section id="compartilhar" class="share-band" aria-labelledby="share-title">
+        <div class="wrap">
+          <h2 class="section-title" id="share-title">Indique a <span class="hl">DMS</span></h2>
+          <p class="section-intro share-intro">
+            Ao colar o link no WhatsApp, o preview usa a imagem e o título do site. No celular, “Compartilhar” abre
+            o menu nativo (áudio, status, apps).
+          </p>
+          <div class="share-actions">
+            <button type="button" class="share-btn share-btn--native" id="share-native" hidden>
+              Compartilhar…
+            </button>
+            <a
+              class="share-btn share-btn--wa"
+              id="share-wa-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >WhatsApp com link</a
+            >
+            <a
+              class="share-btn share-btn--ig"
+              href="https://www.instagram.com/danconsorcios_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram</a
+            >
+            <button type="button" class="share-btn share-btn--copy" id="share-copy">Copiar link</button>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer" id="contato">
@@ -1631,6 +1739,56 @@
           setTimeout(tick, randomDelay());
         }
         setTimeout(tick, randomDelay());
+      })();
+    </script>
+    <script>
+      (function () {
+        var wa = document.getElementById("share-wa-link");
+        var nativeBtn = document.getElementById("share-native");
+        var copyBtn = document.getElementById("share-copy");
+        if (!wa) return;
+        var url = window.location.href.split("#")[0];
+        var title = document.title;
+        var blurb =
+          "DMS Consórcios — carro, moto, imóvel e máquinas agrícolas. Simulador e atendimento com o Danilo: " + url;
+        wa.setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(blurb));
+        if (nativeBtn && typeof navigator.share === "function") {
+          nativeBtn.hidden = false;
+          nativeBtn.addEventListener("click", function () {
+            navigator
+              .share({
+                title: title,
+                text: "DMS Consórcios — consórcio com quem pensa no longo prazo.",
+                url: url,
+              })
+              .catch(function () {});
+          });
+        }
+        if (copyBtn) {
+          copyBtn.addEventListener("click", function () {
+            var label = copyBtn.textContent;
+            function done() {
+              copyBtn.textContent = "Link copiado!";
+              setTimeout(function () {
+                copyBtn.textContent = label;
+              }, 2200);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(url).then(done).catch(function () {});
+              return;
+            }
+            var ta = document.createElement("textarea");
+            ta.value = url;
+            ta.setAttribute("readonly", "");
+            ta.style.cssText = "position:fixed;left:-9999px;top:0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              if (document.execCommand("copy")) done();
+            } catch (e) {}
+            document.body.removeChild(ta);
+          });
+        }
       })();
     </script>
   </body>
