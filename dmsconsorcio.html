@@ -26,6 +26,41 @@
     />
     <meta name="twitter:image" content="https://dmsconsorcio.netlify.app/assets/dms-logo-marca.png" />
     <link rel="canonical" href="https://dmsconsorcio.netlify.app/" />
+    <!-- Meta Ads: URLs com UTMs, ex.: ?utm_source=facebook&utm_medium=paid&utm_campaign=reels_jan&utm_content=anuncio_a -->
+    <!-- Meta Pixel: ID numérico em DMS_META_PIXEL_ID (Gerenciador → Fontes de dados → Pixel). Deixe "" para desligado. -->
+    <script>
+      (function () {
+        var DMS_META_PIXEL_ID = "";
+        if (!DMS_META_PIXEL_ID) return;
+        if (window.fbq) return;
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", DMS_META_PIXEL_ID);
+        fbq("track", "PageView");
+        document.addEventListener(
+          "click",
+          function (e) {
+            var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"]');
+            if (a && window.fbq) fbq("track", "Lead");
+          },
+          true
+        );
+      })();
+    </script>
     <!-- Imagens: pasta assets/ na MESMA pasta deste arquivo. Se aparecer "DA" no lugar da foto, o caminho está errado (ex.: só o .html na Área de trabalho sem copiar assets/). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1082,6 +1117,41 @@
     </style>
   </head>
   <body>
+    <script>
+      (function () {
+        var keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+        var q = new URLSearchParams(window.location.search);
+        var cur = {};
+        try {
+          cur = JSON.parse(sessionStorage.getItem("dms_utm") || "{}");
+        } catch (e) {
+          cur = {};
+        }
+        var hit = false;
+        keys.forEach(function (k) {
+          var v = q.get(k);
+          if (v != null && String(v).length) {
+            cur[k.replace(/^utm_/, "")] = v;
+            hit = true;
+          }
+        });
+        if (hit) sessionStorage.setItem("dms_utm", JSON.stringify(cur));
+        window.dmsAttributionPlain = function () {
+          try {
+            var o = JSON.parse(sessionStorage.getItem("dms_utm") || "{}");
+            var p = [];
+            if (o.source) p.push("origem " + o.source);
+            if (o.medium) p.push("meio " + o.medium);
+            if (o.campaign) p.push("campanha " + o.campaign);
+            if (o.content) p.push("conteúdo " + o.content);
+            if (o.term) p.push("termo " + o.term);
+            return p.length ? "\n\nRef. anúncio: " + p.join(" · ") : "";
+          } catch (e2) {
+            return "";
+          }
+        };
+      })();
+    </script>
     <div class="page-bg" aria-hidden="true"></div>
     <div class="page-grain" aria-hidden="true"></div>
     <a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
@@ -1691,6 +1761,8 @@
             fmtBRL(promo) +
             "%0A%0A" +
             "Quero confirmar condições reais com você.";
+          var att = typeof window.dmsAttributionPlain === "function" ? window.dmsAttributionPlain() : "";
+          if (att) msg += encodeURIComponent(att);
           waBtn.setAttribute("href", waBase + msg);
         }
         tabs.forEach(function (tab) {
@@ -1749,7 +1821,9 @@
         var url = window.location.href.split("#")[0];
         var title = document.title;
         var blurb =
-          "DMS Consórcios — carro, moto, imóvel e máquinas agrícolas. Simulador e atendimento com o Danilo: " + url;
+          "DMS Consórcios — carro, moto, imóvel e máquinas agrícolas. Simulador e atendimento com o Danilo: " +
+          url +
+          (typeof window.dmsAttributionPlain === "function" ? window.dmsAttributionPlain() : "");
         wa.setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(blurb));
         if (nativeBtn && typeof navigator.share === "function") {
           nativeBtn.hidden = false;
@@ -1789,6 +1863,24 @@
           });
         }
       })();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var tail = typeof window.dmsAttributionPlain === "function" ? window.dmsAttributionPlain() : "";
+        if (!tail) return;
+        document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+          if (a.id === "sim-wa-btn") return;
+          try {
+            var raw = a.getAttribute("href");
+            if (!raw || raw.indexOf("5513991006315") === -1) return;
+            var u = new URL(raw, window.location.href);
+            var t = u.searchParams.get("text");
+            if (t == null) return;
+            u.searchParams.set("text", t + tail);
+            a.setAttribute("href", u.toString());
+          } catch (e) {}
+        });
+      });
     </script>
   </body>
 </html>
