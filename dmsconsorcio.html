@@ -570,9 +570,14 @@
       }
       .sim-tabs {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
         margin-bottom: 1.5rem;
+      }
+      @media (min-width: 720px) {
+        .sim-tabs {
+          grid-template-columns: repeat(4, 1fr);
+        }
       }
       .sim-tab {
         display: flex;
@@ -1097,6 +1102,9 @@
               <button type="button" class="sim-tab" role="tab" data-segment="agro" aria-selected="false">
                 <span class="ic" aria-hidden="true">🌾</span> Agro
               </button>
+              <button type="button" class="sim-tab" role="tab" data-segment="caminhao" aria-selected="false">
+                <span class="ic" aria-hidden="true">🚛</span> Caminhão
+              </button>
             </div>
 
             <p class="sim-credit-label">CRÉDITO SELECIONADO</p>
@@ -1450,10 +1458,14 @@
     <script>
       (function () {
         var waBase = "https://wa.me/5513991006315?text=";
+        var caminhaoCredits = [200000, 210000, 220000, 230000, 250000, 270000, 300000, 320000, 350000, 380000];
+        var caminhaoParcelas = [1977.05, 2075.9, 2174.75, 2273.61, 2471.31, 2669.01, 2965.57, 3163.28, 3459.83, 3756.39];
+        var fullOverPromo = 0.0215624 / 0.014375;
         var segments = {
           veiculos: { min: 15000, max: 80000, step: 500, def: 50000, promo: 0.014375, full: 0.0215624, label: "Veículos" },
           imoveis: { min: 100000, max: 500000, step: 5000, def: 200000, promo: 0.0102, full: 0.0153, label: "Imóveis" },
           agro: { min: 80000, max: 400000, step: 5000, def: 150000, promo: 0.0116, full: 0.0174, label: "Agro" },
+          caminhao: { min: 200000, max: 380000, step: 1000, def: 300000, label: "Caminhão", table: true },
         };
         var current = "veiculos";
         var range = document.getElementById("sim-range");
@@ -1470,6 +1482,20 @@
         }
         function fmtBRLInt(n) {
           return Math.round(n).toLocaleString("pt-BR");
+        }
+        function parcelaCaminhao(credit) {
+          var c = caminhaoCredits;
+          var p = caminhaoParcelas;
+          if (credit <= c[0]) return p[0];
+          if (credit >= c[c.length - 1]) return p[p.length - 1];
+          var i;
+          for (i = 0; i < c.length - 1; i++) {
+            if (credit >= c[i] && credit <= c[i + 1]) {
+              var t = (credit - c[i]) / (c[i + 1] - c[i]);
+              return p[i] + t * (p[i + 1] - p[i]);
+            }
+          }
+          return p[p.length - 1];
         }
         function syncSegment(seg) {
           var cfg = segments[seg];
@@ -1490,10 +1516,20 @@
           creditNum.textContent = fmtBRLInt(credit);
           minL.textContent = "R$ " + fmtBRLInt(parseInt(range.min, 10)) + ",00";
           maxL.textContent = "R$ " + fmtBRLInt(parseInt(range.max, 10)) + ",00";
-          var promo = credit * cfg.promo;
-          var full = credit * cfg.full;
-          promoEl.textContent = "R$ " + fmtBRL(promo);
-          fullEl.textContent = "100%: R$ " + fmtBRL(full) + " s/ desconto referência";
+          var promo;
+          var full;
+          if (cfg.table) {
+            promo = parcelaCaminhao(credit);
+            full = promo * fullOverPromo;
+            promoEl.textContent = "R$ " + fmtBRL(promo);
+            fullEl.textContent =
+              "100% (estim.): R$ " + fmtBRL(full) + " s/ desconto — entre faixas da tabela, proporcional.";
+          } else {
+            promo = credit * cfg.promo;
+            full = credit * cfg.full;
+            promoEl.textContent = "R$ " + fmtBRL(promo);
+            fullEl.textContent = "100%: R$ " + fmtBRL(full) + " s/ desconto referência";
+          }
           var msg =
             "Olá, Danilo — simulação pelo site DMS.%0A%0A" +
             "Segmento: " +
