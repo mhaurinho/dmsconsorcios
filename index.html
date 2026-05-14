@@ -555,12 +555,16 @@
       }
       .sim-card {
         max-width: min(100%, 480px);
+        width: 100%;
         margin: 0 auto;
         padding: 1.65rem 1.4rem 1.75rem;
         border-radius: calc(var(--radius) + 4px);
         background: linear-gradient(165deg, rgba(22, 26, 22, 0.98) 0%, rgba(10, 12, 10, 0.99) 55%, rgba(8, 10, 8, 1) 100%);
         border: 1px solid rgba(197, 160, 40, 0.28);
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        box-sizing: border-box;
+        container-type: inline-size;
+        container-name: sim;
       }
       .sim-label {
         font-size: 0.82rem;
@@ -570,34 +574,41 @@
       }
       .sim-tabs {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
+        width: 100%;
+        min-width: 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.4rem;
         margin-bottom: 1.5rem;
       }
-      @media (min-width: 520px) {
+      @container sim (max-width: 340px) {
         .sim-tabs {
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
-      }
-      @media (min-width: 960px) {
-        .sim-tabs {
-          grid-template-columns: repeat(5, 1fr);
+        .sim-tab:last-child:nth-child(odd) {
+          grid-column: 1 / -1;
+          justify-self: center;
+          max-width: min(100%, 12rem);
         }
       }
       .sim-tab {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.35rem;
-        padding: 0.65rem 0.4rem;
+        gap: 0.3rem;
+        padding: 0.55rem 0.3rem;
         border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background: rgba(0, 0, 0, 0.2);
         color: var(--text-muted) !important;
         font-weight: 600;
-        font-size: 0.82rem;
+        font-size: clamp(0.68rem, calc(0.52rem + 2.5cqw), 0.8rem);
         cursor: pointer;
         font-family: inherit;
+        min-width: 0;
+        text-align: center;
+        line-height: 1.2;
+        white-space: normal;
+        overflow-wrap: break-word;
       }
       .sim-tab:hover {
         border-color: rgba(197, 160, 40, 0.35);
@@ -609,7 +620,8 @@
         color: #0a0804 !important;
       }
       .sim-tab .ic {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        flex-shrink: 0;
       }
       .sim-credit-label {
         font-size: 0.72rem;
