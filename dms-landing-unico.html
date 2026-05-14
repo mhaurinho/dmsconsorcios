@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DMS Consórcios — Agro, carro, moto e imóvel</title>
+    <title>DMS Consórcios — Carro, moto, imóvel e máquinas agrícolas</title>
     <meta
       name="description"
-      content="DMS Consórcios: consórcio para agro, carro, moto e imóvel. Fale com Danilo Andrade no WhatsApp."
+      content="DMS Consórcios: carro, moto, imóvel e máquinas agrícolas. Fale com Danilo Andrade no WhatsApp."
     />
     <!-- Imagens: pasta assets/ na MESMA pasta deste arquivo. Se aparecer "DA" no lugar da foto, o caminho está errado (ex.: só o .html na Área de trabalho sem copiar assets/). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -554,13 +554,13 @@
         font-size: 0.98rem;
       }
       .sim-card {
-        max-width: 560px;
+        max-width: min(100%, 480px);
         margin: 0 auto;
-        padding: 1.5rem 1.35rem 1.6rem;
+        padding: 1.65rem 1.4rem 1.75rem;
         border-radius: calc(var(--radius) + 4px);
-        background: var(--bg-panel);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        background: linear-gradient(165deg, rgba(22, 26, 22, 0.98) 0%, rgba(10, 12, 10, 0.99) 55%, rgba(8, 10, 8, 1) 100%);
+        border: 1px solid rgba(197, 160, 40, 0.28);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
       }
       .sim-label {
         font-size: 0.82rem;
@@ -574,9 +574,14 @@
         gap: 0.5rem;
         margin-bottom: 1.5rem;
       }
-      @media (min-width: 720px) {
+      @media (min-width: 520px) {
         .sim-tabs {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (min-width: 960px) {
+        .sim-tabs {
+          grid-template-columns: repeat(5, 1fr);
         }
       }
       .sim-tab {
@@ -615,8 +620,8 @@
       }
       .sim-credit-val {
         font-family: var(--font-display);
-        font-size: clamp(1.85rem, 5vw, 2.35rem);
-        margin: 0 0 1rem;
+        font-size: clamp(1.95rem, 5.2vw, 2.45rem);
+        margin: 0 0 0.85rem;
         line-height: 1.1;
       }
       .sim-credit-val .prefix,
@@ -628,6 +633,11 @@
       .sim-credit-val .num {
         color: var(--text);
         font-weight: 600;
+      }
+      .sim-range-wrap {
+        padding-top: 1rem;
+        margin-bottom: 0.15rem;
+        border-top: 1px solid rgba(197, 160, 40, 0.18);
       }
       input[type="range"].sim-range {
         width: 100%;
@@ -642,10 +652,10 @@
         margin-bottom: 1.35rem;
       }
       .sim-result {
-        padding: 1.1rem 1.15rem;
+        padding: 1.15rem 1.2rem 1.2rem;
         border-radius: 12px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(0, 0, 0, 0.42);
+        border: 1px solid rgba(197, 160, 40, 0.15);
         margin-bottom: 1.25rem;
       }
       .sim-result-label {
@@ -657,10 +667,11 @@
       }
       .sim-result-val {
         font-family: var(--font-display);
-        font-size: 1.85rem;
+        font-size: clamp(1.9rem, 4.8vw, 2.25rem);
         font-weight: 700;
         color: var(--accent-orange);
-        margin: 0 0 0.35rem;
+        margin: 0 0 0.4rem;
+        line-height: 1.1;
       }
       .sim-result-note {
         margin: 0;
@@ -1026,8 +1037,8 @@
             <p class="eyebrow">Consultoria · campo e cidade</p>
             <h1 id="hero-title">Planejamento que transforma metas em <span class="hl">conquista.</span></h1>
             <p class="hero-lead">
-              Agro, imóvel, carro e moto — atendimento com <strong>Danilo Andrade</strong>, com mais de uma década
-              acompanhando grupos e realizações de crédito.
+              Carro, moto, imóvel e máquinas agrícolas — atendimento com <strong>Danilo Andrade</strong>, com mais de
+              uma década acompanhando grupos e realizações de crédito.
             </p>
             <div class="hero-actions">
               <a
@@ -1093,14 +1104,17 @@
           <div class="sim-card">
             <p class="sim-label" id="sim-dream-label">Qual é o seu sonho?</p>
             <div class="sim-tabs" role="tablist" aria-labelledby="sim-dream-label">
-              <button type="button" class="sim-tab" role="tab" data-segment="veiculos" aria-selected="true">
-                <span class="ic" aria-hidden="true">🚗</span> Veículos
+              <button type="button" class="sim-tab" role="tab" data-segment="carro" aria-selected="true">
+                <span class="ic" aria-hidden="true">🚗</span> Carro
+              </button>
+              <button type="button" class="sim-tab" role="tab" data-segment="moto" aria-selected="false">
+                <span class="ic" aria-hidden="true">🏍</span> Moto
               </button>
               <button type="button" class="sim-tab" role="tab" data-segment="imoveis" aria-selected="false">
-                <span class="ic" aria-hidden="true">🏠</span> Imóveis
+                <span class="ic" aria-hidden="true">🏠</span> Imóvel
               </button>
               <button type="button" class="sim-tab" role="tab" data-segment="agro" aria-selected="false">
-                <span class="ic" aria-hidden="true">🌾</span> Agro
+                <span class="ic" aria-hidden="true">🚜</span> Máquinas agrícolas
               </button>
               <button type="button" class="sim-tab" role="tab" data-segment="caminhao" aria-selected="false">
                 <span class="ic" aria-hidden="true">🚛</span> Caminhão
@@ -1112,11 +1126,13 @@
               <span class="prefix">R$</span> <span class="num" id="sim-credit-num">50.000</span
               ><span class="suffix">,00</span>
             </p>
-            <label class="sr-only" for="sim-range">Valor do crédito</label>
-            <input type="range" class="sim-range" id="sim-range" min="15000" max="80000" step="500" value="50000" />
-            <div class="sim-range-labels">
-              <span id="sim-min-label">R$ 15.000,00</span>
-              <span id="sim-max-label">R$ 80.000,00</span>
+            <div class="sim-range-wrap">
+              <label class="sr-only" for="sim-range">Valor do crédito</label>
+              <input type="range" class="sim-range" id="sim-range" min="15000" max="80000" step="500" value="50000" />
+              <div class="sim-range-labels">
+                <span id="sim-min-label">R$ 15.000,00</span>
+                <span id="sim-max-label">R$ 80.000,00</span>
+              </div>
             </div>
 
             <div class="sim-result">
@@ -1343,30 +1359,8 @@
           </p>
           <div class="pillars">
             <article class="pillar">
-              <div class="pillar-icon" aria-hidden="true">🌾</div>
-              <h3>Agro e máquinas</h3>
-              <p>Tratores, implementos, colheitadeiras e apoio logístico ao ritmo do campo.</p>
-              <a
-                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20%2F%20AGRO%20(m%C3%A1quina%20ou%20implemento)."
-                target="_blank"
-                rel="noopener noreferrer"
-                >WhatsApp — Agro</a
-              >
-            </article>
-            <article class="pillar">
-              <div class="pillar-icon" aria-hidden="true">🏠</div>
-              <h3>Imóveis</h3>
-              <p>Casa, apartamento ou terreno — planejamento de crédito com foco em patrimônio.</p>
-              <a
-                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20IM%C3%93VEL."
-                target="_blank"
-                rel="noopener noreferrer"
-                >WhatsApp — Imóvel</a
-              >
-            </article>
-            <article class="pillar">
               <div class="pillar-icon" aria-hidden="true">🚗</div>
-              <h3>Carro e utilitários</h3>
+              <h3>Carro</h3>
               <p>Do primeiro carro ao upgrade — linhas para famílias e perfis exigentes.</p>
               <a
                 href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20CARRO."
@@ -1377,13 +1371,35 @@
             </article>
             <article class="pillar">
               <div class="pillar-icon" aria-hidden="true">🏍</div>
-              <h3>Moto e mobilidade</h3>
+              <h3>Moto</h3>
               <p>Entrada acessível e moto para trabalho ou lazer — caminho claro desde o primeiro contato.</p>
               <a
                 href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20MOTO."
                 target="_blank"
                 rel="noopener noreferrer"
                 >WhatsApp — Moto</a
+              >
+            </article>
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🏠</div>
+              <h3>Imóvel</h3>
+              <p>Casa, apartamento ou terreno — planejamento de crédito com foco em patrimônio.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20IM%C3%93VEL."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Imóvel</a
+              >
+            </article>
+            <article class="pillar">
+              <div class="pillar-icon" aria-hidden="true">🚜</div>
+              <h3>Máquinas agrícolas</h3>
+              <p>Tratores, implementos, colheitadeiras e apoio logístico ao ritmo do campo.</p>
+              <a
+                href="https://wa.me/5513991006315?text=Ol%C3%A1%2C%20Danilo%2C%20vim%20pelo%20site%20DMS%20%E2%80%94%20cons%C3%B3rcio%20%2F%20AGRO%20(m%C3%A1quina%20ou%20implemento)."
+                target="_blank"
+                rel="noopener noreferrer"
+                >WhatsApp — Máquinas</a
               >
             </article>
           </div>
@@ -1462,12 +1478,13 @@
         var caminhaoParcelas = [1977.05, 2075.9, 2174.75, 2273.61, 2471.31, 2669.01, 2965.57, 3163.28, 3459.83, 3756.39];
         var fullOverPromo = 0.0215624 / 0.014375;
         var segments = {
-          veiculos: { min: 15000, max: 80000, step: 500, def: 50000, promo: 0.014375, full: 0.0215624, label: "Veículos" },
-          imoveis: { min: 100000, max: 500000, step: 5000, def: 200000, promo: 0.0102, full: 0.0153, label: "Imóveis" },
-          agro: { min: 80000, max: 400000, step: 5000, def: 150000, promo: 0.0116, full: 0.0174, label: "Agro" },
+          carro: { min: 15000, max: 80000, step: 500, def: 50000, promo: 0.014375, full: 0.0215624, label: "Carro" },
+          moto: { min: 15000, max: 80000, step: 500, def: 30000, promo: 0.014375, full: 0.0215624, label: "Moto" },
+          imoveis: { min: 100000, max: 500000, step: 5000, def: 200000, promo: 0.0102, full: 0.0153, label: "Imóvel" },
+          agro: { min: 80000, max: 400000, step: 5000, def: 150000, promo: 0.0116, full: 0.0174, label: "Máquinas agrícolas" },
           caminhao: { min: 200000, max: 380000, step: 1000, def: 300000, label: "Caminhão", table: true },
         };
-        var current = "veiculos";
+        var current = "carro";
         var range = document.getElementById("sim-range");
         var tabs = document.querySelectorAll(".sim-tab");
         var creditNum = document.getElementById("sim-credit-num");
@@ -1550,7 +1567,7 @@
           });
         });
         range.addEventListener("input", update);
-        syncSegment("veiculos");
+        syncSegment("carro");
       })();
     </script>
     <script>
